@@ -109,6 +109,7 @@ class ListComplexPlane(abscplane.AbsComplexPlane):
         the attribute fs to an empty list so that no functions 
         are transforming the fresh plane.
         """
+        self.fs = []
         self.plane = self.__creategrid__()
     
     @abstractmethod
