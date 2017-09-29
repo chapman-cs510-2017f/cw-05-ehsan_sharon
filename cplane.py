@@ -92,34 +92,32 @@ class ListComplexPlane(abscplane.AbsComplexPlane):
         
     
     # The @abstractmethod "decorator" forces all subclasses
-  def __creategrid__(self)
+  def __creategrid__(self):
+        
         dx = (self.xmax - self.xmin)/(self.xlen - 1)
         dy = (self.ymax-self.ymin)/(self.ylen - 1)
-        self.plane=[[(slef.xmin + i*dx)+(self.ymin + j*dy)*1j for i in range(self.xlen)]for j in range(self.ylen)]
+        
+        return [[(self.xmin + i*dx)+(self.ymin + j*dy)*1j for i in range(self.xlen)]for j in range(self.ylen)]
         
         
             
     # to provide implementations for the following method
     @abstractmethod
     def refresh(self):
-        """Regenerate complex plane.
-        Populate self.plane with new points (x + y*1j), using
-        the stored attributes of xmax, xmin, xlen, ymax, ymin,
-        and ylen to set plane dimensions and resolution. Reset
-        the attribute fs to an empty list so that no functions 
-        are transforming the fresh plane.
-        """
         self.fs = []
         self.plane = self.__creategrid__()
     
     @abstractmethod
     def apply(self, f):
+
+        
         """Add the function f as the last element of self.fs. 
         Apply f to every point of the plane, so that the resulting
         value of self.plane is the final output of the sequence of
         transformations collected in the list self.fs.
         """
-        pass
+        self.plane = f(self.plane)
+        self.fs = self.fs.append(f)
     
     @abstractmethod
     def zoom(self,xmin,xmax,xlen,ymin,ymax,ylen):
@@ -131,5 +129,16 @@ class ListComplexPlane(abscplane.AbsComplexPlane):
         final output of the sequence of transformations collected in
         the list self.fs.
         """
-        pass
+        self.xmin  = float(xmin)
+        self.xmax  = float(xmax)
+        self.xlen  = int(xlen)
+        self.ymin  = float(ymin)
+        self.ymax  = float(ymax)
+        self.ylen  = int(ylen)
+        self.plane = self.__creategrid__()
+        
+        for f in fs:
+            self.plane = f(self.plane)
+            
+        
     
