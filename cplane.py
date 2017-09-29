@@ -87,7 +87,9 @@ class ListComplexPlane(abscplane.AbsComplexPlane):
         # The implementation type of plane is up to the user
         self.plane = self.__creategrid__()
         # fs should be a list of functions, initialized to be empty
-        fs    = NotImplemented
+        self.fs    = []
+        print("init fx")
+        
     
     # The @abstractmethod "decorator" forces all subclasses
   def __creategrid__(self)
@@ -107,7 +109,7 @@ class ListComplexPlane(abscplane.AbsComplexPlane):
         the attribute fs to an empty list so that no functions 
         are transforming the fresh plane.
         """
-        pass
+        self.plane = self.__creategrid__()
     
     @abstractmethod
     def apply(self, f):
