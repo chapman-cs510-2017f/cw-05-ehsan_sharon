@@ -85,11 +85,18 @@ class ListComplexPlane(abscplane.AbsComplexPlane):
         self.ymax  = float(ymax)
         self.ylen  = int(ylen)
         # The implementation type of plane is up to the user
-        self.plane = NotImplemented
+        self.plane = self.__creategrid__()
         # fs should be a list of functions, initialized to be empty
         fs    = NotImplemented
     
     # The @abstractmethod "decorator" forces all subclasses
+  def __creategrid__(self)
+        dx = (self.xmax - self.xmin)/(self.xlen - 1)
+        dy = (self.ymax-self.ymin)/(self.ylen - 1)
+        self.plane=[[(slef.xmin + i*dx)+(self.ymin + j*dy)*1j for i in range(self.xlen)]for j in range(self.ylen)]
+        
+        
+            
     # to provide implementations for the following method
     @abstractmethod
     def refresh(self):
