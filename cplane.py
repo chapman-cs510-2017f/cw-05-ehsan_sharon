@@ -90,6 +90,10 @@ class ListComplexPlane(abscplane.AbsComplexPlane):
         self.fs    = []
         
     
+<<<<<<< HEAD
+=======
+    # The @abstractmethod "decorator" forces all subclasses
+>>>>>>> 3942752a85422188773bfa231ff36ef6114abd61
     def __creategrid__(self):
         
         dx = (self.xmax - self.xmin)/(self.xlen - 1)
