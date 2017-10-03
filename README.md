@@ -1,8 +1,8 @@
 # CS510 CW 5
 
-**Author(s):** **CHANGEME**
+**Author(s):** **Sharon, Eshan**
 
-[![Build Status](https://travis-ci.org/chapman-cs510-2017f/cw-05-YOURNAME.svg?branch=master)](https://travis-ci.org/chapman-cs510-2017f/cw-05-YOURNAME)
+[![Build Status](https://travis-ci.org/chapman-cs510-2017f/cw-05-ehsan_sharon.svg?branch=master)](https://travis-ci.org/chapman-cs510-2017f/cw-05-ehsan_sharon)
 
 ## Specification
 
@@ -23,7 +23,7 @@
 
 Analyze in this section what you found useful about this assignment in your own words. Include any lingering questions or comments that you may have.
 
-**CHANGEME**
+**This classwork was extremely difficult to understand conceptually and then execute onto python.  It was a great/challenging introduction to classes, subclasses, and abstract classes.  It helps me understand how people use code in the industry and work together to solve difficult complex problems.  The classwork also demonstrated how python can easily generate and create 2D planes for complex numbers**
 
 ## Honor Pledge
 
@@ -34,4 +34,4 @@ I pledge that all the work in this repository is my own with only the following 
 
 Signed,
 
-**YOURNAME**
+**Sharon, Eshan**
