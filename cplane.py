@@ -77,7 +77,7 @@ class ListComplexPlane(abscplane.AbsComplexPlane):
     
     # Class attributes, to be set during an __init__
     # The six resolution parameters should be floats
-    def __init__(self,xmin,xmax,xlen,ymin,ymax,ylen,plane,fs)
+    def __init__(self,xmin,xmax,xlen,ymin,ymax,ylen):
         self.xmin  = float(xmin)
         self.xmax  = float(xmax)
         self.xlen  = int(xlen)
@@ -88,38 +88,33 @@ class ListComplexPlane(abscplane.AbsComplexPlane):
         self.plane = self.__creategrid__()
         # fs should be a list of functions, initialized to be empty
         self.fs    = []
-        print("init fx")
         
     
-    # The @abstractmethod "decorator" forces all subclasses
-  def __creategrid__(self):
+    def __creategrid__(self):
         
         dx = (self.xmax - self.xmin)/(self.xlen - 1)
         dy = (self.ymax-self.ymin)/(self.ylen - 1)
         
-        return [[(self.xmin + i*dx)+(self.ymin + j*dy)*1j for i in range(self.xlen)]for j in range(self.ylen)]
+        return [[(self.xmin + i*dx)+(self.ymin + j*dy)*1j for i in range(self.xlen)] for j in range(self.ylen)]
+        #list comprehension to compress for loop that is creating a new list of values
         
-        
-            
-    # to provide implementations for the following method
-    @abstractmethod
     def refresh(self):
         self.fs = []
         self.plane = self.__creategrid__()
     
-    @abstractmethod
+    '''The method self.apply(self,f) should take a function f that transforms 
+    a complex number into another complex number and map that function 
+    over the complex plane to produce the grid of numbers f(x + y*1j),
+    adding the function f to the list self.fs in the process. If the
+    method apply is called multiple times with different functions, then
+    self.fs should record the ordered sequence of functions, and self.plane
+    should contain the final output after applying the entire sequence
+    of functions.'''
     def apply(self, f):
-
         
-        """Add the function f as the last element of self.fs. 
-        Apply f to every point of the plane, so that the resulting
-        value of self.plane is the final output of the sequence of
-        transformations collected in the list self.fs.
-        """
-        self.plane = f(self.plane)
+        self.plane = [[f(i) for i in j] for j in self.plane ]
         self.fs = self.fs.append(f)
     
-    @abstractmethod
     def zoom(self,xmin,xmax,xlen,ymin,ymax,ylen):
         """Reset self.xmin, self.xmax, and self.xlen.
         Also reset self.ymin, self.ymax, and self.ylen.
@@ -137,8 +132,13 @@ class ListComplexPlane(abscplane.AbsComplexPlane):
         self.ylen  = int(ylen)
         self.plane = self.__creategrid__()
         
-        for f in fs:
-            self.plane = f(self.plane)
-            
+        fs=self.fs
+        self.fs= []
         
-    
+        for f in fs:
+            self.apply(f)
+
+#lcp = ListComplexPlane(-10,10,20,-10,10,20)
+#for y in lcp.plane:
+    #for x in y:
+        #print(x)
